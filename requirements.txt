@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+rubpy==7.3.5
+pydantic
+cryptography
