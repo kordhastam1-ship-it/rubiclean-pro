@@ -1,1 +1,509 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>روبیکا کلینر پرو</title>
+<style>
+:root{
+--bg:#0b1020;--card:#121b30;--card2:#18243c;
+--border:#263653;--text:#f3f6ff;--muted:#9eacc7;
+--blue:#5b9cff;--green:#32d6a0;--red:#ff647c;
+}
+*{box-sizing:border-box}
+body{
+margin:0;background:radial-gradient(ellipse at top,#172748,#0b1020 60%);
+color:var(--text);font-family:Tahoma,Arial,sans-serif;
+font-size:14px;line-height:1.9;min-height:100vh
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.55;cursor:not-allowed}
+.container{width:min(100% - 22px,740px);margin:auto;padding:18px 0 30px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:18px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+width:48px;height:48px;border-radius:16px;display:grid;
+place-items:center;font-size:25px;
+background:linear-gradient(140deg,#4289ff,#6d5dfc)
+}
+h1{font-size:18px;margin:0}
+.subtitle{font-size:11px;color:var(--muted)}
+.badge{
+font-size:10px;color:var(--green);border:1px solid #32d6a044;
+background:#32d6a012;padding:3px 9px;border-radius:30px
+}
+.card{
+background:linear-gradient(145deg,#141f35,#10192b);
+border:1px solid var(--border);border-radius:19px;
+padding:18px;margin-bottom:14px
+}
+.hero h2{font-size:20px;margin:0 0 6px}
+.hero p{color:var(--muted);font-size:12px;margin:0}
+.notice{
+display:flex;gap:10px;background:#5b9cff0d;
+border:1px solid #5b9cff40;border-radius:13px;
+padding:12px;margin:14px 0;color:#cbdcff;font-size:12px
+}
+.notice-icon{font-size:20px}
+.section-title{font-size:15px;margin:0 0 13px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.feature{
+text-align:center;background:var(--card);border:1px solid var(--border);
+border-radius:13px;padding:10px 4px
+}
+.feature .icon{font-size:22px}
+.feature strong{display:block;font-size:12px}
+.feature small{font-size:10px;color:var(--muted)}
+label{display:block;font-size:12px;color:#c3cde0;margin:10px 0 6px}
+input{
+width:100%;background:#0b1325;border:1px solid #30415f;
+border-radius:12px;color:white;padding:13px;outline:none;
+direction:ltr;text-align:left
+}
+input:focus{border-color:var(--blue)}
+.btn{border:0;border-radius:12px;padding:12px;font-weight:bold}
+.btn-primary{
+background:linear-gradient(100deg,#3988ff,#6865ff);
+color:white;width:100%;margin-top:14px
+}
+.btn-secondary{background:#22324f;color:white;border:1px solid #344868}
+.btn-danger{background:#ff647c17;color:#ff8b9d;border:1px solid #ff647c55}
+.btn-success{background:#32d6a018;color:#61e5b9;border:1px solid #32d6a055}
+.status{display:none;padding:10px;border-radius:10px;margin-top:12px;font-size:12px;overflow-wrap:anywhere}
+.status.info{display:block;background:#5b9cff15;color:#a9ccff}
+.status.success{display:block;background:#32d6a015;color:#71e8c1}
+.status.error{display:block;background:#ff647c15;color:#ff9aaa}
+.hidden{display:none!important}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--card2);border:1px solid var(--border);border-radius:13px;padding:12px 4px;text-align:center}
+.stat b{display:block;font-size:22px}
+.stat span{font-size:11px;color:var(--muted)}
+.blue b{color:var(--blue)}
+.green b{color:var(--green)}
+.red b{color:var(--red)}
+.item{
+display:flex;align-items:center;gap:11px;padding:12px;
+border:1px solid var(--border);background:#111a2c;
+border-radius:14px;margin-top:10px
+}
+.item-icon{
+width:42px;height:42px;flex-shrink:0;border-radius:12px;
+display:grid;place-items:center;font-size:21px;background:#5b9cff16
+}
+.item-main{flex:1;min-width:0}
+.item-main strong{display:block;font-size:13px}
+.item-main small{display:block;color:var(--muted);font-size:11px;overflow-wrap:anywhere}
+.item-count{font-size:17px;color:var(--blue);font-weight:bold}
+.progress-wrap{height:8px;background:#26334b;border-radius:20px;overflow:hidden;margin-top:11px}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#4289ff,#32d6a0);transition:width .3s}
+.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:11px;margin-top:5px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}
+.actions .btn{width:100%}
+.divider{height:1px;background:var(--border);margin:14px 0}
+.small-note{font-size:11px;color:var(--muted)}
+footer{text-align:center;color:#71809c;font-size:11px;padding:14px}
+footer a{color:#8fb9ff;text-decoration:none}
+.modal-backdrop{
+position:fixed;inset:0;background:#000a;display:grid;
+place-items:center;padding:18px;z-index:10
+}
+.modal{width:min(100%,390px);background:#141f35;border:1px solid var(--border);border-radius:20px;padding:21px}
+.modal h3{margin-top:0}
+.modal p{font-size:13px;color:var(--muted)}
+@media(max-width:420px){
+.container{width:calc(100% - 16px);padding-top:12px}
+.card{padding:14px}
+h1{font-size:16px}
+.logo{width:43px;height:43px}
+.features{gap:5px}
+.stat b{font-size:19px}
+}
+</style>
+</head>
+<body>
+<div class="container">
 
+<header>
+<div class="brand">
+<div class="logo">🧹</div>
+<div>
+<h1>روبیکا کلینر پرو</h1>
+<div class="subtitle">مدیریت کانال‌ها و گروه‌های حساب خودت</div>
+</div>
+</div>
+<span class="badge">نسخه آزمایشی</span>
+</header>
+
+<section class="card hero">
+<h2>حساب روبیکایت را مدیریت کن</h2>
+<p>کانال‌ها و گروه‌های حساب خودت را مشاهده و مدیریت کن؛ ساده، مرحله‌به‌مرحله و با نمایش وضعیت عملیات.</p>
+<div class="features">
+<div class="feature"><div class="icon">🔐</div><strong>ورود امن</strong><small>حساب خودت</small></div>
+<div class="feature"><div class="icon">📊</div><strong>گزارش پیشرفت</strong><small>نمایش وضعیت</small></div>
+<div class="feature"><div class="icon">⏸️</div><strong>کنترل عملیات</strong><small>شروع و توقف</small></div>
+</div>
+</section>
+
+<div class="notice">
+<div class="notice-icon">🛡️</div>
+<div><strong>نکته امنیتی</strong><br>فقط برای حساب خودت استفاده کن. کد ورود را به هیچ‌کس نده.</div>
+</div>
+
+<section class="card" id="loginCard">
+<h3 class="section-title">🔑 ورود به حساب روبیکا</h3>
+
+<div id="phoneStep">
+<label for="phone">شماره موبایل</label>
+<input id="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="مثلاً 09xxxxxxxxx" maxlength="16">
+<button class="btn btn-primary" id="sendCodeBtn" type="button">ارسال کد ورود</button>
+</div>
+
+<div id="codeStep" class="hidden">
+<label for="code">کد تأیید دریافتی</label>
+<input id="code" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="کد تأیید را وارد کن" maxlength="12">
+<button class="btn btn-primary" id="verifyBtn" type="button">تأیید و ورود</button>
+<button class="btn btn-secondary" id="backBtn" type="button" style="width:100%;margin-top:9px">بازگشت</button>
+</div>
+
+<div id="loginStatus" class="status" role="status" aria-live="polite"></div>
+<p class="small-note">برای ورود واقعی، بک‌اند جدید باید روی سرور راه‌اندازی و تنظیم شود.</p>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="card">
+<h3 class="section-title">📈 خلاصه حساب</h3>
+<div class="stats">
+<div class="stat blue"><b id="totalChannels">۰</b><span>کانال‌ها</span></div>
+<div class="stat green"><b id="totalGroups">۰</b><span>گروه‌ها</span></div>
+<div class="stat red"><b id="totalDone">۰</b><span>عملیات انجام‌شده</span></div>
+</div>
+<div class="divider"></div>
+<div class="item">
+<div class="item-icon">📡</div>
+<div class="item-main"><strong>وضعیت اتصال</strong><small id="connectionLabel">در حال بررسی</small></div>
+<span class="badge" id="connectionBadge">متصل</span>
+</div>
+<div class="actions">
+<button class="btn btn-secondary" id="refreshBtn" type="button">🔄 به‌روزرسانی</button>
+<button class="btn btn-danger" id="logoutBtn" type="button">خروج از حساب</button>
+</div>
+</div>
+
+<div class="card">
+<h3 class="section-title">📚 مدیریت کانال‌ها</h3>
+<div class="item">
+<div class="item-icon">📢</div>
+<div class="item-main"><strong>کانال‌های حساب</strong><small id="channelsDescription">برای دریافت فهرست، به‌روزرسانی را بزن.</small></div>
+<div class="item-count" id="channelCount">۰</div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="channelProgress"></div></div>
+<div class="progress-label"><span id="channelProgressText">پیشرفت: ۰٪</span><span id="channelDoneText">۰ انجام‌شده</span></div>
+<div class="actions">
+<button class="btn btn-success" id="startChannelsBtn" type="button">▶ شروع عملیات</button>
+<button class="btn btn-danger" id="stopChannelsBtn" type="button" disabled>■ توقف</button>
+</div>
+<div id="channelsStatus" class="status" role="status" aria-live="polite"></div>
+</div>
+
+<div class="card">
+<h3 class="section-title">👥 مدیریت گروه‌ها</h3>
+<div class="item">
+<div class="item-icon">💬</div>
+<div class="item-main"><strong>گروه‌های حساب</strong><small id="groupsDescription">برای دریافت فهرست، به‌روزرسانی را بزن.</small></div>
+<div class="item-count" id="groupCount">۰</div>
+</div>
+<div class="progress-wrap"><div class="progress-bar" id="groupProgress"></div></div>
+<div class="progress-label"><span id="groupProgressText">پیشرفت: ۰٪</span><span id="groupDoneText">۰ انجام‌شده</span></div>
+<div class="actions">
+<button class="btn btn-success" id="startGroupsBtn" type="button">▶ شروع عملیات</button>
+<button class="btn btn-danger" id="stopGroupsBtn" type="button" disabled>■ توقف</button>
+</div>
+<div id="groupsStatus" class="status" role="status" aria-live="polite"></div>
+</div>
+</section>
+
+<footer>
+روبیکا کلینر پرو · نسخه آزمایشی<br>
+<a href="https://rubika.ir/ISLAMIC_Al_KORDI" target="_blank" rel="noopener noreferrer">صفحه مدیر پروژه در روبیکا</a>
+</footer>
+</div>
+
+<div class="modal-backdrop hidden" id="confirmModal">
+<div class="modal">
+<h3 id="modalTitle">تأیید عملیات</h3>
+<p id="modalText">آیا مطمئنی؟</p>
+<div class="actions">
+<button class="btn btn-secondary" id="modalCancel" type="button">انصراف</button>
+<button class="btn btn-danger" id="modalConfirm" type="button">تأیید</button>
+</div>
+</div>
+</div>
+
+<script>
+/*
+وقتی index.html از همان بک‌اند FastAPI سرو شود، API_BASE خالی می‌ماند.
+اگر فرانت‌اند جدا باشد، API_BASE را به آدرس بک‌اند جدید تغییر بده.
+*/
+const API_BASE = "";
+
+let sessionToken = "";
+let pendingAction = null;
+let pollTimers = {};
+
+const $ = id => document.getElementById(id);
+
+function showStatus(id,message,type="info"){
+const el=$(id);
+el.textContent=message;
+el.className="status "+type;
+}
+function clearStatus(id){
+$(id).textContent="";
+$(id).className="status";
+}
+function faNumber(n){
+return Number(n||0).toLocaleString("fa-IR");
+}
+function normalizePhone(value){
+return value.replace(/[^\d+]/g,"").trim();
+}
+
+async function apiRequest(path,options={}){
+if(!API_BASE && location.protocol==="file:"){
+throw new Error("صفحه را از آدرس میزبانی‌شده باز کن.");
+}
+const headers=Object.assign({"Content-Type":"application/json"},options.headers||{});
+if(sessionToken) headers["X-Session-Token"]=sessionToken;
+
+let response;
+try{
+response=await fetch(API_BASE+path,{...options,headers});
+}catch(e){
+throw new Error("ارتباط با بک‌اند برقرار نشد. آدرس سرور را بررسی کن.");
+}
+let data={};
+try{data=await response.json()}catch(e){}
+if(!response.ok){
+throw new Error(data.detail||data.message||"درخواست ناموفق بود: "+response.status);
+}
+return data;
+}
+
+$("sendCodeBtn").addEventListener("click",async()=>{
+const phone=normalizePhone($("phone").value);
+if(!phone||phone.replace(/\D/g,"").length<10){
+showStatus("loginStatus","شماره موبایل را درست وارد کن.","error");
+return;
+}
+$("sendCodeBtn").disabled=true;
+showStatus("loginStatus","در حال درخواست کد ورود...","info");
+try{
+const data=await apiRequest("/api/auth/send-code",{
+method:"POST",
+body:JSON.stringify({phone})
+});
+if(!data.token) throw new Error("سرور توکن موقت ورود را برنگرداند.");
+sessionToken=data.token;
+$("phoneStep").classList.add("hidden");
+$("codeStep").classList.remove("hidden");
+showStatus("loginStatus",data.message||"اگر درخواست پذیرفته شده باشد، کد را از روبیکا دریافت می‌کنی.","success");
+}catch(e){
+showStatus("loginStatus",e.message,"error");
+}finally{
+$("sendCodeBtn").disabled=false;
+}
+});
+
+$("verifyBtn").addEventListener("click",async()=>{
+const code=$("code").value.trim();
+if(!code){
+showStatus("loginStatus","کد تأیید را وارد کن.","error");
+return;
+}
+$("verifyBtn").disabled=true;
+showStatus("loginStatus","در حال بررسی کد...","info");
+try{
+const data=await apiRequest("/api/auth/verify-code",{
+method:"POST",
+body:JSON.stringify({token:sessionToken,code})
+});
+if(data.token) sessionToken=data.token;
+$("loginCard").classList.add("hidden");
+$("dashboard").classList.remove("hidden");
+$("connectionLabel").textContent=data.message||"ورود تأیید شد";
+$("connectionBadge").textContent="متصل";
+await refreshAll();
+}catch(e){
+showStatus("loginStatus",e.message,"error");
+}finally{
+$("verifyBtn").disabled=false;
+}
+});
+
+$("backBtn").addEventListener("click",()=>{
+$("codeStep").classList.add("hidden");
+$("phoneStep").classList.remove("hidden");
+$("code").value="";
+sessionToken="";
+clearStatus("loginStatus");
+});
+
+function updateProgress(kind,total,done){
+total=Math.max(0,Number(total)||0);
+done=Math.max(0,Number(done)||0);
+const pct=total?Math.min(100,Math.round(done/total*100)):0;
+const channels=kind==="channels";
+$(channels?"totalChannels":"totalGroups").textContent=faNumber(total);
+$(channels?"channelCount":"groupCount").textContent=faNumber(total);
+$(channels?"channelProgress":"groupProgress").style.width=pct+"%";
+$(channels?"channelProgressText":"groupProgressText").textContent="پیشرفت: "+faNumber(pct)+"٪";
+$(channels?"channelDoneText":"groupDoneText").textContent=faNumber(done)+" انجام‌شده";
+}
+
+async function refreshAll(){
+$("refreshBtn").disabled=true;
+try{
+const results=await Promise.allSettled([
+apiRequest("/api/channels/status"),
+apiRequest("/api/groups/status")
+]);
+let doneTotal=0;
+if(results[0].status==="fulfilled"){
+const d=results[0].value;
+updateProgress("channels",d.total??d.total_channels??0,d.done??d.completed??0);
+$("channelsDescription").textContent=d.message||"وضعیت کانال‌ها دریافت شد.";
+doneTotal+=Number(d.done??d.completed??0);
+}else{
+showStatus("channelsStatus",results[0].reason.message,"error");
+}
+if(results[1].status==="fulfilled"){
+const d=results[1].value;
+updateProgress("groups",d.total??d.total_groups??0,d.done??d.completed??0);
+$("groupsDescription").textContent=d.message||"وضعیت گروه‌ها دریافت شد.";
+doneTotal+=Number(d.done??d.completed??0);
+}else{
+showStatus("groupsStatus",results[1].reason.message,"error");
+}
+$("totalDone").textContent=faNumber(doneTotal);
+$("connectionLabel").textContent="اطلاعات سرور بررسی شد";
+}
+finally{
+$("refreshBtn").disabled=false;
+}
+}
+$("refreshBtn").addEventListener("click",async()=>{
+try{await refreshAll()}
+catch(e){showStatus("loginStatus",e.message,"error")}
+});
+
+function askConfirm(title,message,action){
+$("modalTitle").textContent=title;
+$("modalText").textContent=message;
+pendingAction=action;
+$("confirmModal").classList.remove("hidden");
+}
+function closeModal(){
+$("confirmModal").classList.add("hidden");
+pendingAction=null;
+}
+$("modalCancel").addEventListener("click",closeModal);
+$("confirmModal").addEventListener("click",e=>{
+if(e.target===$("confirmModal")) closeModal();
+});
+$("modalConfirm").addEventListener("click",async()=>{
+const action=pendingAction;
+closeModal();
+if(action) await action();
+});
+
+async function startOperation(kind){
+const label=kind==="channels"?"کانال‌ها":"گروه‌ها";
+const startBtn=$(kind==="channels"?"startChannelsBtn":"startGroupsBtn");
+const stopBtn=$(kind==="channels"?"stopChannelsBtn":"stopGroupsBtn");
+startBtn.disabled=true;
+try{
+const data=await apiRequest("/api/"+kind+"/leave/start",{
+method:"POST",
+body:JSON.stringify({})
+});
+stopBtn.disabled=false;
+showStatus(kind+"Status",data.message||"عملیات "+label+" شروع شد.","success");
+beginPolling(kind);
+}catch(e){
+showStatus(kind+"Status",e.message,"error");
+}finally{
+startBtn.disabled=false;
+}
+}
+async function stopOperation(kind){
+const stopBtn=$(kind==="channels"?"stopChannelsBtn":"stopGroupsBtn");
+stopBtn.disabled=true;
+try{
+const data=await apiRequest("/api/"+kind+"/leave/stop",{
+method:"POST",
+body:JSON.stringify({})
+});
+clearInterval(pollTimers[kind]);
+showStatus(kind+"Status",data.message||"درخواست توقف ارسال شد.","info");
+}catch(e){
+showStatus(kind+"Status",e.message,"error");
+stopBtn.disabled=false;
+}
+}
+function beginPolling(kind){
+clearInterval(pollTimers[kind]);
+pollTimers[kind]=setInterval(async()=>{
+if(!sessionToken){
+clearInterval(pollTimers[kind]);
+return;
+}
+try{
+const data=await apiRequest("/api/"+kind+"/leave/status");
+const total=data.total??data.total_channels??data.total_groups??0;
+const done=data.done??data.completed??data.processed??0;
+updateProgress(kind,total,done);
+if(data.message) showStatus(kind+"Status",data.message,"info");
+if(data.error) showStatus(kind+"Status",data.error,"error");
+if(data.finished||data.status==="completed"||(total>0&&done>=total)){
+clearInterval(pollTimers[kind]);
+$(kind==="channels"?"stopChannelsBtn":"stopGroupsBtn").disabled=true;
+showStatus(kind+"Status",data.message||"عملیات به پایان رسید.","success");
+await refreshAll();
+}
+}catch(e){
+showStatus(kind+"Status",e.message,"error");
+}
+},2500);
+}
+
+$("startChannelsBtn").addEventListener("click",()=>{
+askConfirm("مدیریت کانال‌ها","این عملیات ممکن است کانال‌هایی را که انتخاب کرده‌ای ترک کند. قبل از ادامه مطمئن شو.",()=>startOperation("channels"));
+});
+$("startGroupsBtn").addEventListener("click",()=>{
+askConfirm("مدیریت گروه‌ها","این عملیات ممکن است گروه‌هایی را که انتخاب کرده‌ای ترک کند. قبل از ادامه مطمئن شو.",()=>startOperation("groups"));
+});
+$("stopChannelsBtn").addEventListener("click",()=>stopOperation("channels"));
+$("stopGroupsBtn").addEventListener("click",()=>stopOperation("groups"));
+
+$("logoutBtn").addEventListener("click",()=>{
+askConfirm("خروج از حساب","از حساب این صفحه خارج شوی؟ توکن محلی پاک می‌شود.",()=>{
+Object.values(pollTimers).forEach(clearInterval);
+pollTimers={};
+sessionToken="";
+$("dashboard").classList.add("hidden");
+$("loginCard").classList.remove("hidden");
+$("phoneStep").classList.remove("hidden");
+$("codeStep").classList.add("hidden");
+$("phone").value="";
+$("code").value="";
+$("connectionLabel").textContent="قطع اتصال";
+clearStatus("loginStatus");
+clearStatus("channelsStatus");
+clearStatus("groupsStatus");
+});
+});
+</script>
+</body>
+  </html>
